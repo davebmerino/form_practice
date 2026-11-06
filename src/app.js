@@ -4,6 +4,7 @@ const path = require("path");
 const express = require("express");
 
 const morgan = require("morgan");
+const { StatusCodes } = require("http-status-codes");
 
 const app = express();
 
@@ -18,5 +19,17 @@ const accessLogStream = fs.createWriteStream(
 );
 
 app.use(morgan("combined", { stream: accessLogStream }));
+
+app.use((req, res) => {
+  res
+    .status(StatusCodes.NOT_FOUND)
+    .json({
+      message: "Route not found",
+      status: StatusCodes.NOT_FOUND,
+      message: "Route not found",
+
+       
+    });
+});
 
 module.exports = app;

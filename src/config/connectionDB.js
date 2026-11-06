@@ -6,7 +6,10 @@ async function connectionDB() {
     const connectionString = MONGO_URL ? `${MONGO_URL}/${DB_NAME}` : MONGO_URL;
 
     await mongoose.connect(connectionString);
-  } catch (error) {}
+  } catch (error) {
+    console.log("Error on connecting with database:", error);
+    process.exit(1);
+  }
 }
 
 module.exports = connectionDB;

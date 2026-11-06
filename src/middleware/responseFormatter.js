@@ -1,4 +1,4 @@
-const { ReasonPhrases, getReasonPhrase } = require("http-status-codes");
+const { getReasonPhrase } = require("http-status-codes");
 
 function responseFormatter(req, res, next) {
   const originalJson = res.json;
@@ -18,5 +18,9 @@ function responseFormatter(req, res, next) {
     if (res.statusCode > 300) {
       response.error = data;
     }
+    return originalJson.call(res, response);
   };
+  next;
 }
+
+module.exports = responseFormatter;
