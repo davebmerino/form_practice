@@ -3,6 +3,9 @@ const cors = require("cors");
 const path = require("path");
 const express = require("express");
 
+const responseFormatter = require("./middleware/responseFormatter.js");
+const expressWinstonMiddleware = require("./middleware/expressWinston.js");
+
 const morgan = require("morgan");
 const { StatusCodes } = require("http-status-codes");
 
@@ -19,17 +22,15 @@ const accessLogStream = fs.createWriteStream(
 );
 
 app.use(morgan("combined", { stream: accessLogStream }));
+app.use(responseFormatter);
+app.use(expressWinstonMiddleware);
 
 app.use((req, res) => {
-  res
-    .status(StatusCodes.NOT_FOUND)
-    .json({
-      message: "Route not found",
-      status: StatusCodes.NOT_FOUND,
-      message: "Route not found",
-
-       
-    });
+  res.status(StatusCodes.NOT_FOUND).json({
+    message: "Route not found",
+    status: StatusCodes.NOT_FOUND,
+    message: "Route not found",
+  });
 });
 
 module.exports = app;
