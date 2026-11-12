@@ -5,3 +5,6 @@ error.log
 info.log
 
 README.md
+
+package-lock.json
+package.json
